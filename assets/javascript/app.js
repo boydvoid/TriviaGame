@@ -88,6 +88,7 @@ $(document).ready(function() {
     }
   }, 1000);
   gameLoad();
+
   // functions --------------------
   function gameLoad() {
     startBtn.attr("id", "start-button");
@@ -100,6 +101,9 @@ $(document).ready(function() {
   $(document).on("click", "#start-button", function() {
     startBtn.attr("class", "hidden");
     appendGame();
+    $("#my_audio")
+      .get(0)
+      .play();
   });
 
   function appendGame() {
