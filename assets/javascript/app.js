@@ -4,6 +4,7 @@
 $(document).ready(function() {
   var questions = [
     {
+      number: 0,
       question: "What did Ygritte say to Jon Snow?",
       guess1: "You know everything, Jon Snow.",
       guess2: "You know nothing, Jon Snow.",
@@ -49,20 +50,36 @@ $(document).ready(function() {
   let button3 = $("<button>");
   let button4 = $("<button>");
   let startBtn = $("<button>");
-  let timer = 30;
+  let timer = 0;
   let index = 0;
+  let win = 0;
+  let lose = 0;
+  let gameStarted = false;
   var setTimer = setInterval(function() {
-    if (timer !== 0) {
-      timer--;
-      domTimer.text("TIME: " + timer);
-    } else {
-      console.log("clear");
-      clearInterval(setTimer);
-      $(questionsDiv).empty();
-      $(guesses).empty();
-      appendedDiv.text("The correct answer was: " + questions[index - 1].answer);
-      $(questionsDiv).append(appendedDiv);
-      setTimeout(appendGame, 3000);
+    if (gameStarted === true) {
+      if (timer !== 0) {
+        timer--;
+        domTimer.text("TIME: " + timer);
+      } else {
+        if (index >= questions.length) {
+          lose++;
+          clearInterval(setTimer);
+          $(questionsDiv).empty();
+          $(guesses).empty();
+          appendedDiv.text("Correct: " + win + " Incorrect: " + lose);
+          $(questionsDiv).append(appendedDiv);
+        } else {
+          lose++;
+          console.log("clear");
+          timer = 4;
+          $(questionsDiv).empty();
+          $(guesses).empty();
+          appendedDiv.text("The correct answer was: " + questions[index - 1].answer);
+          $(questionsDiv).append(appendedDiv);
+          setTimeout(appendGame, 4000);
+          setTimer;
+        }
+      }
     }
   }, 1000);
   gameLoad();
@@ -81,8 +98,10 @@ $(document).ready(function() {
   });
 
   function appendGame() {
+    gameStarted = true;
     $(questionsDiv).empty();
     $(guesses).empty();
+    timer = 6;
     //append the question
     appendedDiv.attr("id", questions[index].number);
     appendedDiv.text(questions[index].question);
@@ -111,16 +130,33 @@ $(document).ready(function() {
 
   $(document).on("click", ".guesses", function() {
     let btnText = $(this).text();
-
-    if (questions[index].answer === btnText) {
+    console.log(index, questions.length);
+    if (questions[index - 1].answer === btnText) {
       console.log("answer");
-    } else {
-      clearInterval(setInterval);
+      timer = 4;
+      win++;
       $(questionsDiv).empty();
       $(guesses).empty();
-      appendedDiv.text("The correct answer was: " + questions[index - 1].answer);
+      appendedDiv.text("Correct!");
       $(questionsDiv).append(appendedDiv);
-      setTimeout(appendGame, 3000);
+      setTimeout(appendGame, 4000);
+    } else {
+      if (index >= questions.length) {
+        lose++;
+        clearInterval(setTimer);
+        $(questionsDiv).empty();
+        $(guesses).empty();
+        appendedDiv.text("Correct: " + win + " Incorrect: " + lose);
+        $(questionsDiv).append(appendedDiv);
+      } else {
+        timer = 4;
+        lose++;
+        $(questionsDiv).empty();
+        $(guesses).empty();
+        appendedDiv.text("The correct answer was: " + questions[index - 1].answer);
+        $(questionsDiv).append(appendedDiv);
+        setTimeout(appendGame, 4000);
+      }
     }
   });
 });
