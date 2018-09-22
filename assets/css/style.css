@@ -1,3 +1,24 @@
+body {
+  background-image: url("gotimage.jpg");
+}
 .hidden {
   display: none;
+}
+.box {
+  border: 3px solid white;
+  background-color: rgba(0, 0, 0, 0.541);
+  height: 50vh;
+  padding: 30px;
+  margin-top: 130px;
+}
+
+#questions {
+  color: white;
+}
+
+.btn-primary {
+  margin: 20px;
+  padding: 10px;
+
+  background-color: rgb(52, 61, 114);
 }
