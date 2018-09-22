@@ -22,3 +22,14 @@ body {
 
   background-color: rgb(52, 61, 114);
 }
+
+#title {
+  color: white;
+}
+
+#timer {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+}

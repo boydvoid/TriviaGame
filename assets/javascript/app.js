@@ -63,11 +63,7 @@ $(document).ready(function() {
       } else {
         if (index >= questions.length) {
           lose++;
-          clearInterval(setTimer);
-          $(questionsDiv).empty();
-          $(guesses).empty();
-          appendedDiv.text("Correct: " + win + " Incorrect: " + lose);
-          $(questionsDiv).append(appendedDiv);
+          endScreen();
           setTimeout(function() {
             resetGame();
           }, 3000);
@@ -110,7 +106,7 @@ $(document).ready(function() {
     gameStarted = true;
     $(questionsDiv).empty();
     $(guesses).empty();
-    timer = 6;
+    timer = 31;
     //append the question
     appendedDiv.attr("id", questions[index].number);
     appendedDiv.text(questions[index].question);
@@ -141,22 +137,29 @@ $(document).ready(function() {
     let btnText = $(this).text();
     console.log(index, questions.length);
     if (questions[index - 1].answer === btnText) {
-      console.log("answer");
-      timer = 4;
-      win++;
-      $(questionsDiv).empty();
-      $(guesses).empty();
-      appendedDiv.text("Correct!");
-      $(questionsDiv).append(appendedDiv);
-      setTimeout(appendGame, 4000);
+      if (index >= questions.length) {
+        console.log("answer");
+        timer = 4;
+        win++;
+        $(questionsDiv).empty();
+        $(guesses).empty();
+        appendedDiv.text("Correct!");
+        $(questionsDiv).append(appendedDiv);
+        setTimeout(endScreen, 4000);
+      } else {
+        console.log("answer");
+        timer = 4;
+        win++;
+        $(questionsDiv).empty();
+        $(guesses).empty();
+        appendedDiv.text("Correct!");
+        $(questionsDiv).append(appendedDiv);
+        setTimeout(appendGame, 4000);
+      }
     } else {
       if (index >= questions.length) {
         lose++;
-        clearInterval(setTimer);
-        $(questionsDiv).empty();
-        $(guesses).empty();
-        appendedDiv.text("Correct: " + win + " Incorrect: " + lose);
-        $(questionsDiv).append(appendedDiv);
+        endScreen();
         setTimeout(function() {
           resetGame();
         }, 3000);
@@ -187,5 +190,17 @@ $(document).ready(function() {
     startBtn.attr("class", "btn btn-secondary");
     questionsDiv.append(startBtn);
     index = 0;
+  }
+
+  function endScreen() {
+    clearInterval(setTimer);
+    $(questionsDiv).empty();
+    $(guesses).empty();
+    $(domTimer).empty();
+    appendedDiv.text("Correct: " + win + " Incorrect: " + lose);
+    $(questionsDiv).append(appendedDiv);
+    setTimeout(function() {
+      resetGame();
+    }, 3000);
   }
 });
