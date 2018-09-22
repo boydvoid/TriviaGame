@@ -15,30 +15,30 @@ $(document).ready(function() {
     },
     {
       number: 1,
-      question: "2",
-      guess1: "You know everything, Jon Snow.",
-      guess2: "You know nothing, Jon Snow.",
-      guess3: "How do you not know that, Jon Snow.",
-      guess4: "You're an idiot, Jon Snow.",
-      answer: "You know nothing, Jon Snow."
+      question: "What is Danaery's gold colored dragon named?",
+      guess1: "Drogon",
+      guess2: "Viserion",
+      guess3: "Rhaegal",
+      guess4: "Mushu",
+      answer: "Viserion"
     },
     {
       number: 2,
-      question: "3?",
-      guess1: "You know everything, Jon Snow.",
-      guess2: "You know nothing, Jon Snow.",
-      guess3: "How do you not know that, Jon Snow.",
-      guess4: "You're an idiot, Jon Snow.",
-      answer: "You know nothing, Jon Snow."
+      question: "What is the Dornish sigil",
+      guess1: "Wolf",
+      guess2: "Dragon",
+      guess3: "Lion",
+      guess4: "Sun and Spear",
+      answer: "Sun and Spear"
     },
     {
       number: 3,
-      question: "4?",
-      guess1: "You know everything, Jon Snow.",
-      guess2: "You know nothing, Jon Snow.",
-      guess3: "How do you not know that, Jon Snow.",
-      guess4: "You're an idiot, Jon Snow.",
-      answer: "You know nothing, Jon Snow."
+      question: "What does Khal mean in Dothraki?",
+      guess1: "King",
+      guess2: "Queen",
+      guess3: "Slave",
+      guess4: "Accountant",
+      answer: "King"
     }
   ];
   let questionsDiv = $("#questions");
@@ -68,13 +68,18 @@ $(document).ready(function() {
           $(guesses).empty();
           appendedDiv.text("Correct: " + win + " Incorrect: " + lose);
           $(questionsDiv).append(appendedDiv);
+          setTimeout(function() {
+            resetGame();
+          }, 3000);
         } else {
           lose++;
           console.log("clear");
           timer = 4;
           $(questionsDiv).empty();
           $(guesses).empty();
-          appendedDiv.text("The correct answer was: " + questions[index - 1].answer);
+          appendedDiv.text(
+            "The correct answer was: " + questions[index - 1].answer
+          );
           $(questionsDiv).append(appendedDiv);
           setTimeout(appendGame, 4000);
           setTimer;
@@ -148,15 +153,35 @@ $(document).ready(function() {
         $(guesses).empty();
         appendedDiv.text("Correct: " + win + " Incorrect: " + lose);
         $(questionsDiv).append(appendedDiv);
+        setTimeout(function() {
+          resetGame();
+        }, 3000);
       } else {
         timer = 4;
         lose++;
         $(questionsDiv).empty();
         $(guesses).empty();
-        appendedDiv.text("The correct answer was: " + questions[index - 1].answer);
+        appendedDiv.text(
+          "The correct answer was: " + questions[index - 1].answer
+        );
         $(questionsDiv).append(appendedDiv);
         setTimeout(appendGame, 4000);
       }
     }
   });
+
+  function resetGame() {
+    timer = 0;
+    index = 0;
+    win = 0;
+    lose = 0;
+    gameStarted = false;
+
+    $(guesses).empty();
+    questionsDiv.empty();
+    startBtn.removeClass("hidden");
+    startBtn.attr("class", "btn btn-secondary");
+    questionsDiv.append(startBtn);
+    index = 0;
+  }
 });
