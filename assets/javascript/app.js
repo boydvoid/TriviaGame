@@ -74,7 +74,8 @@ $(document).ready(function() {
           $(questionsDiv).empty();
           $(guesses).empty();
           appendedDiv.text(
-            "The correct answer was: " + questions[index - 1].answer
+            "OUT OF TIME! The correct answer was: " +
+              questions[index - 1].answer
           );
           $(questionsDiv).append(appendedDiv);
           setTimeout(appendGame, 4000);
@@ -169,7 +170,7 @@ $(document).ready(function() {
         $(questionsDiv).empty();
         $(guesses).empty();
         appendedDiv.text(
-          "The correct answer was: " + questions[index - 1].answer
+          "INCORRECT! The correct answer was: " + questions[index - 1].answer
         );
         $(questionsDiv).append(appendedDiv);
         setTimeout(appendGame, 4000);
